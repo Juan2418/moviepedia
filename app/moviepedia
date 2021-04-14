@@ -9,6 +9,6 @@ require 'vendor/autoload.php';
 
 $app = new Application('Moviepedia');
 
-$app->add(new ShowCommand());
+$app->add(new ShowCommand(new GuzzleHttp\Client));
 
 $app->run();
