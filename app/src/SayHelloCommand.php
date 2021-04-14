@@ -7,6 +7,7 @@ namespace Acme;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SayHelloCommand extends Command
@@ -18,13 +19,22 @@ class SayHelloCommand extends Command
             ->addArgument(
                 'name',
                 InputArgument::REQUIRED,
-                'Your Name.');
+                'Your Name.')
+            ->addOption(
+                'greeting',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Override the default greeting',
+                'Hello');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $output->writeln('hello ' . $name);
+        $greeting = $input->getOption('greeting');
+        $message = sprintf('%s, %s', $greeting, $name);
+
+        $output->writeln($message);
         return 0;
     }
 }
