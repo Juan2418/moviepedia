@@ -3,18 +3,20 @@
 <?php
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 require 'vendor/autoload.php';
 
-$app = new Application();
+$app = new Application('Hello World Demo');
 
 $app->register('sayHelloTo')
-    ->addArgument('name')
-    ->setCode(function (InputInterface $input, OutputInterface $output)
-    {
-        $output->writeln('hello world');
+    ->setDescription('Perform a basic Hello World')
+    ->addArgument('name', InputArgument::REQUIRED, 'Your Name.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+        $name = $input->getArgument('name');
+        $output->writeln('hello ' . $name);
     });
 
 $app->run();
